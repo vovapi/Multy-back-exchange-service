@@ -342,7 +342,7 @@ func (b *ExchangeManager) fillDb() {
 
 				for _, ticker := range value.Tickers {
 					dbTicker := DbTicker{}
-					dbTicker.TimpeStamp = ticker.TimpeStamp
+					dbTicker.TimeStamp = ticker.TimpeStamp
 					dbTicker.ReferenceCurrency = ticker.Pair.ReferenceCurrency
 					dbTicker.TargetCurrency = ticker.Pair.TargetCurrency
 					dbTicker.Rate = ticker.Rate
@@ -362,7 +362,7 @@ func (b *ExchangeManager) fillDb() {
 		//v := b.GetRates(time.Now().Add(-4 * time.Minute), "BINANCE", "BTS", []string{"BTC", "USDT"})
 		//
 		//for _,value := range v {
-		//	fmt.Println("get rates :", value.symbol(), value.TimpeStamp, value.Rate)
+		//	fmt.Println("get rates :", value.symbol(), value.TimeStamp, value.Rate)
 		//}
 	}
 }

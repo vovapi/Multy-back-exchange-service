@@ -64,7 +64,7 @@ func (b *GrpcClient) listenTickers(ch chan *server.Tickers) {
 			//fmt.Println("before sendign")
 			ch <- feature
 			//for _, exchangeTicker := range feature.ExchangeTickers {
-			//	fmt.Println(exchangeTicker.Exchange, exchangeTicker.TimpeStamp, exchangeTicker.Tickers)
+			//	fmt.Println(exchangeTicker.Exchange, exchangeTicker.TimeStamp, exchangeTicker.Tickers)
 			//}
 		}
 	}
