@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
 	"github.com/KristinaEtc/slf"
 	_ "github.com/KristinaEtc/slflog"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 	_ "github.com/lib/pq"
 )
 

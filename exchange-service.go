@@ -1,8 +1,8 @@
 package exchanger
 
 import (
-	"github.com/Appscrunch/Multy-back-exchange-service/core"
-	"github.com/Appscrunch/Multy-back-exchange-service/exchange-rates"
+	"github.com/Multy-io/Multy-back-exchange-service/core"
+	"github.com/Multy-io/Multy-back-exchange-service/exchange-rates"
 )
 
 type Exchanger struct {

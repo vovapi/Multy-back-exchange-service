@@ -1,19 +1,17 @@
 package core
 
 import (
-"time"
-"github.com/Appscrunch/Multy-back-exchange-service/api"
-"fmt"
-"encoding/json"
-"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"encoding/json"
+	"fmt"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
+	"time"
 )
 
 //type BittrexTicker struct {
 //	Symbol string `json:"currencyPair"`
 //	Last   string `json:"last"`
 //}
-
-
 
 type HuobiTicker struct {
 	Status string `json:"status"`
@@ -34,12 +32,10 @@ type HuobiTicker struct {
 	} `json:"tick"`
 }
 
-
 type HuobiManager struct {
 	BasicManager
-	huobyApi    *api.HuobiApi
+	huobyApi *api.HuobiApi
 }
-
 
 func (b *HuobiManager) StartListen(exchangeConfiguration ExchangeConfiguration, resultChan chan Result) {
 
@@ -80,7 +76,6 @@ func (b *HuobiManager) StartListen(exchangeConfiguration ExchangeConfiguration, 
 			}
 
 		}
-
 
 	}
 

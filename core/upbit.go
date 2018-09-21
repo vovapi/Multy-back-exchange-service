@@ -1,11 +1,11 @@
 package core
 
 import (
-"time"
-"github.com/Appscrunch/Multy-back-exchange-service/api"
-"fmt"
-"encoding/json"
-"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"encoding/json"
+	"fmt"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
+	"time"
 )
 
 //type BittrexTicker struct {
@@ -30,12 +30,10 @@ type UpbitTicker struct {
 	Timestamp        int64   `json:"timestamp"`
 }
 
-
 type UpbitManager struct {
 	BasicManager
-	upbitApi    *api.UpbitApi
+	upbitApi *api.UpbitApi
 }
-
 
 func (b *UpbitManager) StartListen(exchangeConfiguration ExchangeConfiguration, resultChan chan Result) {
 
@@ -66,19 +64,18 @@ func (b *UpbitManager) StartListen(exchangeConfiguration ExchangeConfiguration, 
 				json.Unmarshal(response.Message, &upbitTickers)
 				if len(upbitTickers) > 0 {
 					upbitTicker := upbitTickers[0]
-						var ticker Ticker
-						ticker.Rate = upbitTicker.TradePrice
-						ticker.TimpeStamp = time.Now()
-						ticker.Pair = response.Pair
-						b.Lock()
-						b.tickers[ticker.Pair.Symbol()] = ticker
-						b.Unlock()
+					var ticker Ticker
+					ticker.Rate = upbitTicker.TradePrice
+					ticker.TimpeStamp = time.Now()
+					ticker.Pair = response.Pair
+					b.Lock()
+					b.tickers[ticker.Pair.Symbol()] = ticker
+					b.Unlock()
 
 				}
 			}
 
 		}
-
 
 	}
 

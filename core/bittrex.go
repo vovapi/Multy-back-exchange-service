@@ -1,18 +1,17 @@
 package core
 
 import (
-	"time"
-	"github.com/Appscrunch/Multy-back-exchange-service/api"
-	"fmt"
 	"encoding/json"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"fmt"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
+	"time"
 )
 
 //type BittrexTicker struct {
 //	Symbol string `json:"currencyPair"`
 //	Last   string `json:"last"`
 //}
-
 
 type BittrexTicker struct {
 	Success bool   `json:"success"`
@@ -25,12 +24,10 @@ type BittrexTicker struct {
 	Pair currencies.CurrencyPair
 }
 
-
 type BittrexManager struct {
 	BasicManager
-	bittrexApi    *api.BittrexApi
+	bittrexApi *api.BittrexApi
 }
-
 
 func (b *BittrexManager) StartListen(exchangeConfiguration ExchangeConfiguration, resultChan chan Result) {
 
@@ -73,7 +70,6 @@ func (b *BittrexManager) StartListen(exchangeConfiguration ExchangeConfiguration
 
 		}
 
-
 	}
 
 }
@@ -90,28 +86,26 @@ func (b *BittrexManager) listen(pairs []currencies.CurrencyPair, responseCh chan
 
 func (b *BittrexManager) startSendingDataBack(exchangeConfiguration ExchangeConfiguration, resultChan chan Result) {
 	go func() {
-	for range time.Tick(1 * time.Second) {
-		func() {
-			tickers := []Ticker{}
+		for range time.Tick(1 * time.Second) {
+			func() {
+				tickers := []Ticker{}
 
-			b.Lock()
-			for _, value := range b.tickers {
-				if value.TimpeStamp.After(time.Now().Add(-maxTickerAge * time.Second)) {
-					tickers = append(tickers, value)
+				b.Lock()
+				for _, value := range b.tickers {
+					if value.TimpeStamp.After(time.Now().Add(-maxTickerAge * time.Second)) {
+						tickers = append(tickers, value)
+					}
 				}
-			}
-			b.Unlock()
+				b.Unlock()
 
-
-
-			var tickerCollection = TickerCollection{}
-			tickerCollection.TimpeStamp = time.Now()
-			tickerCollection.Tickers = tickers
-			//fmt.Println(tickerCollection)
-			if len(tickerCollection.Tickers) > 0 {
-				resultChan <- Result{exchangeConfiguration.Exchange.String(), &tickerCollection, nil}
-			}
-		}()
-	}
+				var tickerCollection = TickerCollection{}
+				tickerCollection.TimpeStamp = time.Now()
+				tickerCollection.Tickers = tickers
+				//fmt.Println(tickerCollection)
+				if len(tickerCollection.Tickers) > 0 {
+					resultChan <- Result{exchangeConfiguration.Exchange.String(), &tickerCollection, nil}
+				}
+			}()
+		}
 	}()
 }

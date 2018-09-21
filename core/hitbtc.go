@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/api"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 	"strconv"
 )
 
@@ -40,7 +40,7 @@ func (b *HitBtcTicker) getCurriences() currencies.CurrencyPair {
 				targetCurrencyString := strings.TrimSuffix(symbol, referenceCurrencyCode)
 				//fmt.Println(targetCurrencyString)
 				var targetCurrency = currencies.NewCurrencyWithCode(targetCurrencyString)
-				return currencies.CurrencyPair{ targetCurrency, referenceCurrency}
+				return currencies.CurrencyPair{targetCurrency, referenceCurrency}
 			}
 		}
 

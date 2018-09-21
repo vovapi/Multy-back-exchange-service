@@ -14,7 +14,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 	"google.golang.org/grpc"
 	"strconv"
 )
@@ -30,7 +30,7 @@ type StreamTickerCollection struct {
 
 type StreamTicker struct {
 	Pair currencies.CurrencyPair
-	Rate              float64
+	Rate float64
 }
 
 type Server struct {

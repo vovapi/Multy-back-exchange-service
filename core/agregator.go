@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
 	"github.com/KristinaEtc/slf"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 )
 
 var log = slf.WithContext("core")
@@ -16,9 +16,9 @@ type TickerCollection struct {
 }
 
 type Ticker struct {
-	Pair currencies.CurrencyPair
-	Rate              float64
-	TimpeStamp        time.Time
+	Pair       currencies.CurrencyPair
+	Rate       float64
+	TimpeStamp time.Time
 }
 
 type Agregator struct {
@@ -43,7 +43,7 @@ func (b *Agregator) getTickers(startDate time.Time) map[string]TickerCollection 
 	var filteredTickers = make(map[string]TickerCollection)
 	b.Lock()
 	var allTickers = map[string]TickerCollection{}
-	for k,v := range b.allTickers {
+	for k, v := range b.allTickers {
 		allTickers[k] = v
 	}
 	b.Unlock()

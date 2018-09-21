@@ -5,10 +5,10 @@ import (
 
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/core"
-	"github.com/Appscrunch/Multy-back-exchange-service/exchange-rates"
 	"github.com/KristinaEtc/config"
 	_ "github.com/KristinaEtc/slflog"
+	"github.com/Multy-io/Multy-back-exchange-service/core"
+	"github.com/Multy-io/Multy-back-exchange-service/exchange-rates"
 )
 
 var manager = core.NewManager()

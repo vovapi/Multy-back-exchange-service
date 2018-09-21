@@ -10,7 +10,7 @@ import (
 	"time"
 	//"fmt"
 	"fmt"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 )
 
 type RestApi struct {
@@ -21,14 +21,12 @@ type RestApi struct {
 
 type RestApiReposponse struct {
 	Message []byte
-	Pair currencies.CurrencyPair
+	Pair    currencies.CurrencyPair
 }
-
 
 type BittrexApi struct {
 	*RestApi
 }
-
 
 func NewRestApi() *RestApi {
 	var api = RestApi{}
@@ -40,14 +38,13 @@ func NewBittrexApi() *BittrexApi {
 	return &BittrexApi{NewRestApi()}
 }
 
-func (p *RestApi) publicRequest(urlString string, pair currencies.CurrencyPair, responseCh chan <- RestApiReposponse, errorCh chan <- error) {
+func (p *RestApi) publicRequest(urlString string, pair currencies.CurrencyPair, responseCh chan<- RestApiReposponse, errorCh chan<- error) {
 
 	<-throttle
 
 	//TODO - check if close is needed
 	//defer close(responseCh)
 	//defer close(errorCh)
-
 
 	req, err := http.NewRequest("GET", urlString, nil)
 	if err != nil {
@@ -79,23 +76,19 @@ func (p *RestApi) publicRequest(urlString string, pair currencies.CurrencyPair, 
 	//errorCh <- nil
 }
 
-
-
-func (p *BittrexApi) GetTicker(pair currencies.CurrencyPair, responseCh chan <- RestApiReposponse, errorCh chan <- error)  {
+func (p *BittrexApi) GetTicker(pair currencies.CurrencyPair, responseCh chan<- RestApiReposponse, errorCh chan<- error) {
 
 	referenceCurrencyCode := pair.ReferenceCurrency.CurrencyCode()
 	targetCurrencyCode := pair.TargetCurrency.CurrencyCode()
 
-	if  referenceCurrencyCode == "BCH" {
+	if referenceCurrencyCode == "BCH" {
 		referenceCurrencyCode = "BCC"
 	} else if targetCurrencyCode == "BCH" {
 		targetCurrencyCode = "BCC"
 	}
 
-	urlStrging := "https://bittrex.com/api/v1.1/public/getticker?market=" + referenceCurrencyCode +"-" + targetCurrencyCode
+	urlStrging := "https://bittrex.com/api/v1.1/public/getticker?market=" + referenceCurrencyCode + "-" + targetCurrencyCode
 	//fmt.Println(urlStrging)
 	p.publicRequest(urlStrging, pair, responseCh, errorCh)
 
-
 }
-

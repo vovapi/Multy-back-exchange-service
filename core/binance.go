@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/api"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 	//"fmt"
 	"strconv"
 )
@@ -114,7 +114,7 @@ func (b *BinanceManager) composeSybolsToParse(exchangeConfiguration ExchangeConf
 				continue
 			}
 
-			if  targetCurrency == "BCH" {
+			if targetCurrency == "BCH" {
 				targetCurrency = "BCC"
 			}
 

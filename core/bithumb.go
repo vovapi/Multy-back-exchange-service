@@ -1,14 +1,14 @@
 package core
 
 import (
-	"time"
-	"github.com/Appscrunch/Multy-back-exchange-service/api"
-	"fmt"
 	"encoding/json"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"fmt"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
+	"time"
 	//"strings"
 	"strconv"
-	)
+)
 
 type BithumbCoinResult struct {
 	OpeningPrice string `json:"opening_price"`
@@ -24,8 +24,8 @@ type BithumbCoinResult struct {
 }
 
 type BithumbTicker struct {
-	Status  string `json:"status"`
-	Data map[string]*BithumbCoinResult `json:"data"`
+	Status string                        `json:"status"`
+	Data   map[string]*BithumbCoinResult `json:"data"`
 }
 
 type KRWTicker struct {
@@ -34,15 +34,12 @@ type KRWTicker struct {
 	} `json:"KRW_USD"`
 }
 
-
-
 type BithumbManager struct {
 	BasicManager
-	bithumbApi    *api.BithumbApi
-	fiatApi    *api.FiatApi
+	bithumbApi     *api.BithumbApi
+	fiatApi        *api.FiatApi
 	currentKrwRate float64
 }
-
 
 func (b *BithumbManager) StartListen(exchangeConfiguration ExchangeConfiguration, resultChan chan Result) {
 
@@ -51,7 +48,6 @@ func (b *BithumbManager) StartListen(exchangeConfiguration ExchangeConfiguration
 	b.fiatApi = api.NewFiatApi()
 	//b.symbolsToParse = b.composeSybolsToParse(exchangeConfiguration)
 	//b.setchannelids()
-
 
 	krwPair := currencies.CurrencyPair{currencies.SouthKoreanWon, currencies.Tether}
 
@@ -80,9 +76,9 @@ func (b *BithumbManager) StartListen(exchangeConfiguration ExchangeConfiguration
 					var bithumbTicker BithumbTicker
 					json.Unmarshal(response.Message, &bithumbTicker)
 
-					for k, v :=range  bithumbTicker.Data {
+					for k, v := range bithumbTicker.Data {
 
-						if  v.ClosingPrice != "" {
+						if v.ClosingPrice != "" {
 							//fmt.Println(k,v)
 							var ticker Ticker
 							ticker.Rate, _ = strconv.ParseFloat(v.ClosingPrice, 64)
@@ -90,7 +86,7 @@ func (b *BithumbManager) StartListen(exchangeConfiguration ExchangeConfiguration
 							ticker.TimpeStamp = time.Now()
 							targetCurrency := currencies.NewCurrencyWithCode(k)
 							referenceCurrency := currencies.Tether
-							ticker.Pair = currencies.CurrencyPair{TargetCurrency:targetCurrency, ReferenceCurrency:referenceCurrency}
+							ticker.Pair = currencies.CurrencyPair{TargetCurrency: targetCurrency, ReferenceCurrency: referenceCurrency}
 							//fmt.Println(ticker.Pair.Symbol())
 							b.Lock()
 							b.tickers[ticker.Pair.Symbol()] = ticker
@@ -99,11 +95,9 @@ func (b *BithumbManager) StartListen(exchangeConfiguration ExchangeConfiguration
 
 					}
 
-
 				}
 			}
 		}
-
 
 	}
 
@@ -124,7 +118,6 @@ func (b *BithumbManager) listenFiat(pair currencies.CurrencyPair, responseCh cha
 		}
 	}()
 }
-
 
 func (b *BithumbManager) startSendingDataBack(exchangeConfiguration ExchangeConfiguration, resultChan chan Result) {
 	go func() {

@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
-	stream "github.com/Appscrunch/Multy-back-exchange-service/stream/server"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
+	stream "github.com/Multy-io/Multy-back-exchange-service/stream/server"
 )
 
 const maxTickerAge = 5
@@ -29,12 +29,12 @@ type Manager struct {
 	bitfinexManager *BitfinexManager
 	gdaxManager     *GdaxManager
 	okexManager     *OkexManager
-	bittrexManager     *BittrexManager
-	huobiManager     *HuobiManager
-	upbitManager     *UpbitManager
-	krakenManager     *KrakenManager
-	bithumbManager     *BithumbManager
-	server *stream.Server
+	bittrexManager  *BittrexManager
+	huobiManager    *HuobiManager
+	upbitManager    *UpbitManager
+	krakenManager   *KrakenManager
+	bithumbManager  *BithumbManager
+	server          *stream.Server
 
 	agregator *Agregator
 }
@@ -64,8 +64,8 @@ type ManagerConfiguration struct {
 	RefreshInterval     time.Duration   `json:"refreshInterval"`
 	DBConfiguration     DBConfiguration `json:"dbconfiguration"`
 	HistoryStartDate    time.Time
-	HistoryEndDate		time.Time
-	HistoryApiKey 		string
+	HistoryEndDate      time.Time
+	HistoryApiKey       string
 }
 
 func (b *ManagerConfiguration) Pairs() []currencies.CurrencyPair {
@@ -115,7 +115,6 @@ func (exchange Exchange) String() string {
 	return exchanges[exchange]
 }
 
-
 func (exchange Exchange) CoinApiString() string {
 	switch exchange {
 	case Huobi:
@@ -135,10 +134,10 @@ const (
 	Okex     Exchange = 4
 	Poloniex Exchange = 5
 	Bittrex  Exchange = 6
-	Huobi 	 Exchange = 7
-	Upbit 	 Exchange = 8
-	Kraken 	 Exchange = 9
-	Bithumb Exchange = 10
+	Huobi    Exchange = 7
+	Upbit    Exchange = 8
+	Kraken   Exchange = 9
+	Bithumb  Exchange = 10
 )
 
 type ExchangeConfiguration struct {
@@ -146,7 +145,7 @@ type ExchangeConfiguration struct {
 	TargetCurrencies    []string
 	ReferenceCurrencies []string
 	RefreshInterval     int
-	Pairs []currencies.CurrencyPair
+	Pairs               []currencies.CurrencyPair
 }
 
 func (b *Manager) launchExchange(exchangeConfiguration ExchangeConfiguration, ch chan Result) {
@@ -211,8 +210,6 @@ func (b *Manager) StartListen(configuration ManagerConfiguration) {
 		*allTickers = streamTickerCollections
 	}
 
-
-
 	for {
 		select {
 		case result := <-ch:
@@ -250,7 +247,6 @@ func (b *Manager) convertToStreamTicker(ticker Ticker) stream.StreamTicker {
 	streamTicker.Pair = ticker.Pair
 	return streamTicker
 }
-
 
 func (b *Manager) CollectHisoryData(configuration ManagerConfiguration) {
 

@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/api"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/api"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 )
 
 type BitfinexManager struct {
@@ -58,10 +58,9 @@ func (b *BitfinexTicker) getCurriences() currencies.CurrencyPair {
 					targetCurrencyString = "DASH"
 				}
 
-
 				//fmt.Println("targetCurrencyString", targetCurrencyString)
 				var targetCurrency = currencies.NewCurrencyWithCode(targetCurrencyString)
-				return currencies.CurrencyPair{ targetCurrency, referenceCurrency}
+				return currencies.CurrencyPair{targetCurrency, referenceCurrency}
 			}
 		}
 
@@ -117,7 +116,6 @@ func (b *BitfinexManager) startSendingDataBack(exchangeConfiguration ExchangeCon
 				tempTickers[k] = v
 			}
 			b.Unlock()
-
 
 			for _, value := range tempTickers {
 				if value.TimpeStamp.After(time.Now().Add(-maxTickerAge * time.Second)) {

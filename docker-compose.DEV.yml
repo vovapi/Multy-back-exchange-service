@@ -6,7 +6,7 @@ services:
         container_name: multy-back-exchange-info.DEV
         volumes:
             - ~/go/src:/go/src
-        working_dir: /go/src/github.com/Appscrunch/Multy-back-exchange-service
+        working_dir: /go/src/github.com/Multy-io/Multy-back-exchange-service
         command: make build run
 
         restart: "no"

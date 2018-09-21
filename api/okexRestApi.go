@@ -1,6 +1,5 @@
 package api
 
-
 import (
 	//"fmt"
 	//"strconv"
@@ -8,11 +7,8 @@ import (
 
 	//"fmt"
 	//"fmt"
-	"github.com/Appscrunch/Multy-back-exchange-service/currencies"
+	"github.com/Multy-io/Multy-back-exchange-service/currencies"
 )
-
-
-
 
 type OkexRestApi struct {
 	*RestApi
@@ -22,8 +18,7 @@ func NewOkexRestApi() *OkexRestApi {
 	return &OkexRestApi{NewRestApi()}
 }
 
-
-func (p *OkexRestApi) GetTicker(pair currencies.CurrencyPair, responseCh chan <- RestApiReposponse, errorCh chan <- error)  {
+func (p *OkexRestApi) GetTicker(pair currencies.CurrencyPair, responseCh chan<- RestApiReposponse, errorCh chan<- error) {
 
 	referenceCurrencyCode := pair.ReferenceCurrency.CurrencyCode()
 	targetCurrencyCode := pair.TargetCurrency.CurrencyCode()
@@ -39,6 +34,4 @@ func (p *OkexRestApi) GetTicker(pair currencies.CurrencyPair, responseCh chan <-
 	//fmt.Println(urlStrging)
 	p.publicRequest(urlStrging, pair, responseCh, errorCh)
 
-
 }
-

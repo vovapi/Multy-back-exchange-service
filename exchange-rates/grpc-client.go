@@ -5,7 +5,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/Appscrunch/Multy-back-exchange-service/stream/server"
+	"github.com/Multy-io/Multy-back-exchange-service/stream/server"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -58,7 +58,7 @@ func (b *GrpcClient) listenTickers(ch chan *server.Tickers) {
 			if err == io.EOF {
 				break
 			}
-			if err != nil { 
+			if err != nil {
 				//log.Fatalf("%v.ListFeatures(_) = _, %v", b.client, err)
 			}
 			//fmt.Println("before sendign")
