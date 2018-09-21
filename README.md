@@ -1,13 +1,14 @@
 # Multy-back-exchange-service
 Exchange service for Multy back
 
-1 install postgres 10;
-2 run shell srcript createDB.sh that will create DB exampple: "sh createDB.sh "postgres" "postgres" "test""
-3 run sql script from sql/setupDB file and check that all tables,views,indexes and 2 functions are created;
-4 init Exchanger with func InitExchanger(conf core.ManagerConfiguration)
-5 there are 2 api methods:
-	5.1 Exchanger.Exchanger.Subscribe(ch chan []*Exchange, refreshInterval time.Duration, targetCodes []string, referenceCode string):
+1. Install postgres 10;
+2. Run shell script `createDB.sh` that will create DB. Example: `sh createDB.sh "postgres" "postgres" "test"`
+3. Run sql script from `sql/setupDB` file and check that all tables, views, indexes and 2 functions are created
+4. Init Exchanger with `func InitExchanger(conf core.ManagerConfiguration)`
+5. There are 2 api methods:
+	* `Exchanger.Exchanger.Subscribe(ch chan []*Exchange, refreshInterval time.Duration, targetCodes []string, referenceCode string)`
 	example:
+	```go
 	ch := make(chan []*Exchange)
 	go exchanger.Exchanger.Subscribe(ch, 5, []string{"DASH", "ETC", "EOS", "WAVES", "STEEM", "BTS", "ETH"}, "USDT")
 	for {
@@ -18,6 +19,9 @@ Exchange service for Multy back
 			}
 		}
 	}
-
-	5.2 xchanger.Exchanger. GetRates(timeStamp time.Time, exchangeName string, targetCode string, referecies []string) []*Ticker:
-	example: v := b.GetRates(time.Now().Add(-4 * time.Minute), "BINANCE", "BTS", []string{"BTC", "USDT"})
+    ```
+	* `exchanger.Exchanger. GetRates(timeStamp time.Time, exchangeName string, targetCode string, referecies []string) []*Ticker`
+	example:
+	```go
+	v := b.GetRates(time.Now().Add(-4 * time.Minute), "BINANCE", "BTS", []string{"BTC", "USDT"})
+	```
